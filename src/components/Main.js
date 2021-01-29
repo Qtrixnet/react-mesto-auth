@@ -1,18 +1,6 @@
 import avatarBlank from "../images/prof.jpg";
 
-function handleEditAvatarClick() {
-  document.querySelector("#update").classList.add("popup_opened");
-}
-
-function handleEditProfileClick() {
-  document.querySelector("#editProfile").classList.add("popup_opened");
-}
-
-function handleAddPlaceClick() {
-  document.querySelector("#addCard").classList.add("popup_opened");
-}
-
-function Main() {
+function Main(props) {
   return (
     <main className="content">
       <section className="profile">
@@ -26,7 +14,7 @@ function Main() {
           <button
             title="Загрузить новый аватар"
             className="profile__avatar-edit-button"
-            onClick={handleEditAvatarClick}
+            onClick={props.onEditAvatar}
           ></button>
         </div>
         <div className="profile__info">
@@ -43,14 +31,14 @@ function Main() {
             type="button"
             title="Редактировать профиль"
             className="profile__edit-button"
-            onClick={handleEditProfileClick}
+            onClick={props.onEditProfile}
           ></button>
         </div>
         <button
           type="button"
           title="Добавить новую фотографию"
           className="profile__add-button"
-          onClick={handleAddPlaceClick}
+          onClick={props.onAddPlace}
         ></button>
       </section>
       <section className="elements">

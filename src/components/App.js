@@ -1,15 +1,48 @@
+import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import PopupWithForm from "./PopupWithForm";
 
 function App() {
+
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+
+  function handleEditAvatarClick() {
+    setEditAvatarPopupOpen(!isEditAvatarPopupOpen)
+  }
+  
+  function handleEditProfileClick() {
+    setEditProfilePopupOpen(!isEditProfilePopupOpen)
+  }
+  
+  function handleAddPlaceClick() {
+    setAddPlacePopupOpen(!isAddPlacePopupOpen)
+  }
+
+  function closeAllPopups() {
+    setEditAvatarPopupOpen(false)
+    setEditProfilePopupOpen(false)
+    setAddPlacePopupOpen(false)
+  }
+
   return (
     <div className="App">
       <div className="page">
         <div className="page__container">
           <Header />
-          <Main />
+          <Main
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+          />
+          <PopupWithForm onClose={closeAllPopups} isOpen={isEditProfilePopupOpen}/>
+          <PopupWithForm onClose={closeAllPopups} isOpen={isAddPlacePopupOpen}/>
+          <PopupWithForm onClose={closeAllPopups} isOpen={isEditAvatarPopupOpen}/>
           <Footer />
+
           <div id="editProfile" className="popup">
             <form name="profile" className="popup__form" noValidate>
               <fieldset className="popup__set">
@@ -96,21 +129,6 @@ function App() {
             <div className="popup__overlay"></div>
           </div>
 
-          <div id="openPicture" className="popup">
-            <div className="popup__fullScreen">
-              <div className="popup__image-desription">
-                <img
-                  className="popup__image"
-                  src="#"
-                  alt="Фото в попапе с карточкой"
-                />
-                <p className="popup__image-subtitle"></p>
-                <button type="button" className="popup__close-button"></button>
-              </div>
-            </div>
-            <div className="popup__overlay"></div>
-          </div>
-
           <div id="confirm" className="popup">
             <form name="confirmDeleteCard" className="popup__form" noValidate>
               <fieldset className="popup__set">
@@ -182,7 +200,7 @@ function App() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default App;
