@@ -1,6 +1,30 @@
-import avatarBlank from "../images/prof.jpg";
+import React from "react";
+import api from '../utils/api';
 
 function Main(props) {
+  const [userAvatar, setUserAvatar] = React.useState();
+  const [userName, setUserName] = React.useState();
+  const [userDescription, setUserDescription] = React.useState();
+
+  api.getUserInfo()
+
+  React.useEffect(() => {
+    Promise.all([
+      api.getUserInfo()
+    
+      // api.getInitialCards()
+    ])
+    .then(([userInfo]) => {
+      setUserName(userInfo.name)
+      setUserDescription(userInfo.about)
+      setUserAvatar(userInfo.avatar)
+      // setCurrentUser(userInfo)
+      // setCards(cardList)
+      // setUserInfoGet(true)
+    })
+    .catch((err) => console.log(err))
+  }, [])
+
   return (
     <main className="content">
       <section className="profile">
@@ -8,7 +32,7 @@ function Main(props) {
           <img
             className="profile__avatar"
             title="Аватар профиля"
-            src={avatarBlank}
+            src={userAvatar}
             alt="Аватар"
           />
           <button
@@ -19,13 +43,10 @@ function Main(props) {
         </div>
         <div className="profile__info">
           <h1 id="profile__name" className="profile__name">
-            Кто здесь?
+            {userName}
           </h1>
           <p id="profile__job" className="profile__job">
-            Смотрим
-            <span className="spinner">
-              <i className="rotation"></i>
-            </span>
+            {userDescription}
           </p>
           <button
             type="button"

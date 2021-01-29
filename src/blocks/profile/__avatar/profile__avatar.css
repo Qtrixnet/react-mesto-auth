@@ -4,7 +4,7 @@
   border-radius: 50%;
   background: #000;
   background-image: url("../../../images/Logo-white.svg");
-  background-size: 50%, contain;
+  background-size: 100%, contain;
   background-repeat: no-repeat;
   background-position: center;
   object-fit: cover;
