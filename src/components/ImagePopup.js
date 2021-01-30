@@ -1,18 +1,18 @@
-function ImagePopup() {
+function ImagePopup(props) {
   return (
-    <div id="openPicture" className="popup">
+    <div className={`popup ${props.card.isOpen && 'popup_opened'}`}>
       <div className="popup__fullScreen">
         <div className="popup__image-desription">
           <img
             className="popup__image"
-            src="#"
-            alt="Фото в попапе с карточкой"
+            src={`${props.card.element.link}`} 
+            alt={props.card.element.name}
           />
-          <p className="popup__image-subtitle"></p>
-          <button type="button" className="popup__close-button"></button>
+          <p className="popup__image-subtitle">{props.card.element.name}</p>
+          <button type="button" onClick={props.onClose} className="popup__close-button"></button>
         </div>
       </div>
-      <div className="popup__overlay"></div>
+      <div onClick={props.onClose} className="popup__overlay"></div>
     </div>
   );
 }
