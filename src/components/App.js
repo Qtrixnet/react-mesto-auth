@@ -6,15 +6,14 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(
-    false
-  );
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
     isOpen: false,
     element: {},
   });
+  const [isCardDelete, setIsCardDelete] = React.useState(false);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -32,10 +31,15 @@ function App() {
     setSelectedCard({ ...selectedCard, isOpen: true, element: card });
   }
 
+  function handleEditAvatarClick() {
+    setIsCardDelete(!isCardDelete);
+  }
+
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
+    setIsCardDelete(false)
     setSelectedCard({ ...selectedCard, isOpen: false });
   }
 
@@ -148,6 +152,12 @@ function App() {
               ></span>
             </label>
           </PopupWithForm>
+          <PopupWithForm
+            onClose={closeAllPopups}
+            isOpen={isCardDelete}
+            name="confirmDeleteCard"
+            id="confirm"
+            title="Вы уверены?"></PopupWithForm>
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
           <Footer />
         </div>

@@ -2,21 +2,23 @@ import React from "react";
 
 function Card(props) {
 
+  const {card, likeCounter, onCardClick} = props
+
   function handleClick() {
-    props.onCardClick(props.card);
+    onCardClick(card);
   }
 
   return (
     <li className="elements__list-item">
     <img
-      src={props.card.link}
+      src={card.link}
       className="elements__picture"
       title="Посмотреть фотографию"
-      alt={props.card.name}
+      alt={card.name}
       onClick={handleClick}
     />
     <div className="elements__container">
-      <h2 className="elements__text">{props.card.name}</h2>
+      <h2 className="elements__text">{card.name}</h2>
       <button
         type="button"
         title="Удалить карточку"
@@ -27,7 +29,7 @@ function Card(props) {
           type="button"
           className="elements__like-button"
         ></button>
-        <span className="elements__like-counter">{props.likeCounter}</span>
+        <span className="elements__like-counter">{likeCounter}</span>
       </div>
     </div>
   </li>

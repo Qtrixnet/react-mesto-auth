@@ -3,10 +3,12 @@ import api from "../utils/api";
 import Card from "./Card";
 
 function Main(props) {
-  const [userAvatar, setUserAvatar] = React.useState();
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setUserDescription] = React.useState();
+  const [userAvatar, setUserAvatar] = React.useState('#');
+  const [userName, setUserName] = React.useState('');
+  const [userDescription, setUserDescription] = React.useState('');
   const [cards, setCards] = React.useState([]);
+
+  const {onEditAvatar, onEditProfile, onAddPlace, onCardClick} = props;
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -32,7 +34,7 @@ function Main(props) {
           <button
             title="Загрузить новый аватар"
             className="profile__avatar-edit-button"
-            onClick={props.onEditAvatar}
+            onClick={onEditAvatar}
           ></button>
         </div>
         <div className="profile__info">
@@ -46,14 +48,14 @@ function Main(props) {
             type="button"
             title="Редактировать профиль"
             className="profile__edit-button"
-            onClick={props.onEditProfile}
+            onClick={onEditProfile}
           ></button>
         </div>
         <button
           type="button"
           title="Добавить новую фотографию"
           className="profile__add-button"
-          onClick={props.onAddPlace}
+          onClick={onAddPlace}
         ></button>
       </section>
       <section className="elements">
@@ -62,7 +64,7 @@ function Main(props) {
             <Card
               key={card._id}
               card={card}
-              onCardClick={props.onCardClick}
+              onCardClick={onCardClick}
               likeCounter={card.likes.length}
             />
           ))}

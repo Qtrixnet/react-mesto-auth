@@ -18,7 +18,7 @@ class Api {
 
   //* Запрос данных пользователя
   getUserInfo() {
-    return fetch(`${this._baseUrl}users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._token,
       },
@@ -27,7 +27,7 @@ class Api {
 
   //* Запрос изначальных карточек
   getInitialCards() {
-    return fetch(`${this._baseUrl}cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: {
         authorization: this._token,
       },
@@ -35,7 +35,7 @@ class Api {
   }
 
   editAvatar(data) {
-    return fetch(`${this._baseUrl}users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: {
         authorization: this._token,
@@ -49,7 +49,7 @@ class Api {
 
   //* Запрос на редактирование данных пользователя
   editProfile(data) {
-    return fetch(`${this._baseUrl}users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
         authorization: this._token,
@@ -64,7 +64,7 @@ class Api {
 
   //* Запрос на добавление карточки
   addNewCard(data) {
-    return fetch(`${this._baseUrl}cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: {
         authorization: this._token,
@@ -79,7 +79,7 @@ class Api {
 
   //* Запрос на удаление карточки
   deleteCard(data) {
-    return fetch(`${this._baseUrl}cards/${data}`, {
+    return fetch(`${this._baseUrl}/cards/${data}`, {
       method: "DELETE",
       headers: {
         authorization: this._token,
@@ -89,7 +89,7 @@ class Api {
 
   //* Запрос на добавление лайка карточке
   addCardLike(data) {
-    return fetch(`${this._baseUrl}cards/likes/${data}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${data}`, {
       method: "PUT",
       headers: {
         authorization: this._token,
@@ -99,7 +99,7 @@ class Api {
 
   //* Запрос на удаление лайка карточки
   deleteCardLike(data) {
-    return fetch(`${this._baseUrl}cards/likes/${data}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${data}`, {
       method: "DELETE",
       headers: {
         authorization: this._token,
@@ -109,7 +109,7 @@ class Api {
 }
 
 const api = new Api({
-  serverUrl: "https://mesto.nomoreparties.co/v1/cohort-19/",
+  serverUrl: "https://mesto.nomoreparties.co/v1/cohort-19",
   token: "4fc24223-fbb6-4e5b-bedd-d51fcb2b9911",
 });
 

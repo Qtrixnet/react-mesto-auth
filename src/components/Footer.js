@@ -1,8 +1,10 @@
+import React from "react";
+
 function Footer() {
   return (
     <footer className="footer">
     <p className="footer__author">
-      &copy; 2020 Kirill Shashichev 💙 Яндекс Практикум
+      &copy; {new Date().getFullYear()} Kirill Shashichev 💙 Яндекс Практикум
     </p>
   </footer>
   )
