@@ -8,7 +8,7 @@ function Main(props) {
   const [userDescription, setUserDescription] = React.useState('');
   const [cards, setCards] = React.useState([]);
 
-  const {onEditAvatar, onEditProfile, onAddPlace, onCardClick} = props;
+  const {onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardDelete} = props;
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -65,6 +65,7 @@ function Main(props) {
               key={card._id}
               card={card}
               onCardClick={onCardClick}
+              onCardDelete={onCardDelete}
               likeCounter={card.likes.length}
             />
           ))}

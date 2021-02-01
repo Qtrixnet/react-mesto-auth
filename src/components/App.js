@@ -31,7 +31,7 @@ function App() {
     setSelectedCard({ ...selectedCard, isOpen: true, element: card });
   }
 
-  function handleEditAvatarClick() {
+  function handleCardDelete() {
     setIsCardDelete(!isCardDelete);
   }
 
@@ -53,6 +53,7 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
+            onCardDelete={handleCardDelete}
           />
           <PopupWithForm
             onClose={closeAllPopups}
@@ -157,7 +158,8 @@ function App() {
             isOpen={isCardDelete}
             name="confirmDeleteCard"
             id="confirm"
-            title="Вы уверены?"></PopupWithForm>
+            title="Вы уверены?">
+          </PopupWithForm>
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
           <Footer />
         </div>

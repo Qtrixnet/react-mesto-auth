@@ -2,7 +2,7 @@ import React from "react";
 
 function Card(props) {
 
-  const {card, likeCounter, onCardClick} = props
+  const {card, likeCounter, onCardClick, onCardDelete} = props
 
   function handleClick() {
     onCardClick(card);
@@ -23,6 +23,7 @@ function Card(props) {
         type="button"
         title="Удалить карточку"
         className="elements__delete-button"
+        onClick={onCardDelete}
       ></button>
       <div className="elements__like-container">
         <button
