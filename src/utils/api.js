@@ -87,7 +87,17 @@ class Api {
     }).then((res) => this._requestResult(res));
   }
 
-  //* Запрос на добавление лайка карточке
+  //* Запрос на добавление или удаление лайки карточки
+  changeCardLike(cardId, isLiked) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: !isLiked ? "PUT" : "DELETE",
+      headers: {
+        authorization: this._token,
+      },
+    }).then((res) => this._requestResult(res));
+  }
+
+  // //* Запрос на добавление лайка карточке
   addCardLike(data) {
     return fetch(`${this._baseUrl}/cards/likes/${data}`, {
       method: "PUT",
@@ -97,15 +107,15 @@ class Api {
     }).then((res) => this._requestResult(res));
   }
 
-  //* Запрос на удаление лайка карточки
-  deleteCardLike(data) {
-    return fetch(`${this._baseUrl}/cards/likes/${data}`, {
-      method: "DELETE",
-      headers: {
-        authorization: this._token,
-      },
-    }).then((res) => this._requestResult(res));
-  }
+  // //* Запрос на удаление лайка карточки
+  // deleteCardLike(data) {
+  //   return fetch(`${this._baseUrl}/cards/likes/${data}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       authorization: this._token,
+  //     },
+  //   }).then((res) => this._requestResult(res));
+  // }
 }
 
 const api = new Api({
