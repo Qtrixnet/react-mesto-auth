@@ -49,8 +49,18 @@ function App() {
     setSelectedCard({ ...selectedCard, isOpen: true, element: card });
   }
 
-  function handleCardDelete() {
-    setIsCardDelete(!isCardDelete);
+  function handleCardDelete(card) {
+    // setIsCardDelete(!isCardDelete);
+    api.deleteCard(card._id).then(() => 
+    {
+      //* Формируем новый массив на основе имеющегося, удаляя карточку из старого
+      const newCards = cards.filter(newCard => newCard._id !== card._id)
+      //* Обновляем стейт
+      setCards(newCards);
+    })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   function closeAllPopups() {
@@ -78,7 +88,6 @@ function App() {
         console.log(err);
       });
   }
-
   return (
     <div className="App">
       <div className="page">

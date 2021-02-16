@@ -31,6 +31,10 @@ function Card(props) {
     onCardLike(card)
   }
 
+  function handleDeleteClick() {
+    onCardDelete(card)
+  }
+
   return (
     <li className="elements__list-item">
     <img
@@ -46,7 +50,7 @@ function Card(props) {
         type="button"
         title="Удалить карточку"
         className={cardDeleteButtonClassName}
-        onClick={onCardDelete}
+        onClick={handleDeleteClick}
       ></button>
       <div className="elements__like-container">
         <button
