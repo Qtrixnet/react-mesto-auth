@@ -2,11 +2,11 @@ import React from "react";
 
 function PopupWithForm(props) {
 
-  const {id, isOpen, name, children, title, onClose} = props;
+  const {id, isOpen, name, children, title, onClose, onSubmit} = props;
 
   return (
     <div id={id} className={`popup ${isOpen && 'popup_opened'}`}>
-      <form name={name} className="popup__form" noValidate>
+      <form name={name} className="popup__form" onSubmit={onSubmit} noValidate>
         <fieldset className="popup__set">
           <p className="popup__title">{title}</p>
           {children}

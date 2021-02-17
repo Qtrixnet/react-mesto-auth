@@ -8,6 +8,7 @@ class Api {
   //* Проверка статуса запроса
   _requestResult(res) {
     if (res.ok) {
+      // console.log(res)
       return res.json();
     } else {
       return Promise.reject(
@@ -57,7 +58,7 @@ class Api {
       },
       body: JSON.stringify({
         name: data.name,
-        about: data.job,
+        about: data.about,
       }),
     }).then((res) => this._requestResult(res));
   }
@@ -87,7 +88,7 @@ class Api {
     }).then((res) => this._requestResult(res));
   }
 
-  //* Запрос на добавление или удаление лайки карточки
+  //* Запрос на добавление или удаление лайка карточки
   changeCardLike(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: !isLiked ? "PUT" : "DELETE",

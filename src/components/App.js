@@ -6,6 +6,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import CurrentUserContext from '../contexts/CurrentUserContext';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -21,8 +22,8 @@ function App() {
 
   React.useEffect(() => {
     api.getUserInfo()
-      .then(res => {setCurrentUser(res);})
-      .catch(err => {console.log(err);})
+      .then(res => { setCurrentUser(res); })
+      .catch(err => { console.log(err); })
   }, []);
 
   React.useEffect(() => {
@@ -51,8 +52,7 @@ function App() {
 
   function handleCardDelete(card) {
     // setIsCardDelete(!isCardDelete);
-    api.deleteCard(card._id).then(() => 
-    {
+    api.deleteCard(card._id).then(() => {
       //* Формируем новый массив на основе имеющегося, удаляя карточку из старого
       const newCards = cards.filter(newCard => newCard._id !== card._id)
       //* Обновляем стейт
@@ -76,9 +76,8 @@ function App() {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
     //* Отправляем запрос в API и получаем обновлённые данные карточки
-    
-    api.changeCardLike(card._id, isLiked).then((newCard) =>
-    {
+
+    api.changeCardLike(card._id, isLiked).then((newCard) => {
       //* Формируем новый массив на основе имеющегося, подставляя в него новую карточку
       const newCards = cards.map((c) => c._id === card._id ? newCard : c);
       //* Обновляем стейт
@@ -88,6 +87,13 @@ function App() {
         console.log(err);
       });
   }
+
+  function handleUpdateUser(newData) {
+    api.editProfile(newData)
+      .then(res => { setCurrentUser(res); closeAllPopups() })
+      .catch(err => { console.log(err) });
+  }
+
   return (
     <div className="App">
       <div className="page">
@@ -103,44 +109,7 @@ function App() {
               onCardLike={handleCardLike}
               cards={cards}
             />
-            <PopupWithForm
-              onClose={closeAllPopups}
-              isOpen={isEditProfilePopupOpen}
-              name="profile"
-              id="editProfile"
-              title="Редактировать профиль"
-            >
-              <label className="popup__form-field">
-                <input
-                  name="name"
-                  placeholder="Имя"
-                  required
-                  maxLength="40"
-                  className="popup__input"
-                  id="popup__name-input"
-                  type="text"
-                />
-                <span
-                  id="popup__name-input-error"
-                  className="popup__input-error"
-                ></span>
-              </label>
-              <label className="popup__form-field">
-                <input
-                  name="job"
-                  placeholder="Профессия"
-                  required
-                  maxLength="200"
-                  className="popup__input"
-                  id="popup__job-input"
-                  type="text"
-                />
-                <span
-                  id="popup__job-input-error"
-                  className="popup__input-error"
-                ></span>
-              </label>
-            </PopupWithForm>
+            <EditProfilePopup onUpdateUser={handleUpdateUser} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
             <PopupWithForm
               onClose={closeAllPopups}
               isOpen={isAddPlacePopupOpen}
