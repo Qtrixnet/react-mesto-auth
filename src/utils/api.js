@@ -43,7 +43,7 @@ class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        avatar: data.avatar,
+        avatar: data,
       }),
     }).then((res) => this._requestResult(res));
   }
