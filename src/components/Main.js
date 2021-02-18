@@ -2,13 +2,9 @@ import React from "react";
 import Card from "./Card";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
-function Main(props) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardDelete, onCardLike, cards }) {
 
-  const { onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardDelete, onCardLike, cards} = props;
-
-  const currentUser = React.useContext(CurrentUserContext);
-
-  const { name, about, avatar } = currentUser;
+  const { name, about, avatar } = React.useContext(CurrentUserContext);
 
   return (
     <main className="content">

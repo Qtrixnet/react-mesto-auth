@@ -8,7 +8,6 @@ class Api {
   //* Проверка статуса запроса
   _requestResult(res) {
     if (res.ok) {
-      // console.log(res)
       return res.json();
     } else {
       return Promise.reject(

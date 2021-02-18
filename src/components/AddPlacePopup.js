@@ -1,7 +1,7 @@
 import React from 'react';
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({ isOpen, onClose, onAddCard}) {
+function AddPlacePopup({ isOpen, onClose, onAddCard, isDataLoad }) {
 
     const [placeName, setPlaceName] = React.useState('');
     const [placeLink, setPlaceLink] = React.useState('');
@@ -38,6 +38,7 @@ function AddPlacePopup({ isOpen, onClose, onAddCard}) {
             name="newCard"
             id="addCard"
             title="Новое место"
+            submitText={isDataLoad ? 'Добавляем...' : 'Добавить карточку'}
         >
             <label className="popup__form-field">
                 <input

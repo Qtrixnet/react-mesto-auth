@@ -2,14 +2,16 @@ import React from 'react';
 import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
-    const [name, setName] = React.useState('');
-    const [description, setDescription] = React.useState('');
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isDataLoad }) {
+    const [profileName, setProfileName] = React.useState('');
+    const [profileDescription, setDescription] = React.useState('');
 
     const currentUser = React.useContext(CurrentUserContext);
 
+    const { name, about } = currentUser;
+
     function handleChangeName(e) {
-        setName(e.target.value);
+        setProfileName(e.target.value);
     }
 
     function handleChangeDescription(e) {
@@ -18,17 +20,17 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-      
+
         //* Передаём значения управляемых компонентов во внешний обработчик
         onUpdateUser({
-          name,
-          about: description,
+            name: profileName,
+            about: profileDescription,
         });
-      } 
+    }
 
     React.useEffect(() => {
-        setName(currentUser.name);
-        setDescription(currentUser.about);
+        setProfileName(name);
+        setDescription(about);
     }, [currentUser]);
 
     return (
@@ -39,10 +41,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
+            submitText={isDataLoad ? 'Сохраняем...' : 'Сохранить профиль'}
         >
             <label className="popup__form-field">
                 <input
-                    value={name || ''} onChange={handleChangeName}
+                    value={profileName || ''} onChange={handleChangeName}
                     name="name"
                     placeholder="Имя"
                     required
@@ -58,7 +61,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             </label>
             <label className="popup__form-field">
                 <input
-                    value={description || ''} onChange={handleChangeDescription}
+                    value={profileDescription || ''} onChange={handleChangeDescription}
                     name="job"
                     placeholder="Профессия"
                     required
