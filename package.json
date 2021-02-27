@@ -1,5 +1,7 @@
 {
   "name": "mesto-react",
+  "author": "Kirill Shashichev <qtrixnet@yandex.ru>",
+  "description": "project of a photo sharing service based on react",
   "homepage": "./",
   "version": "0.1.0",
   "private": true,
