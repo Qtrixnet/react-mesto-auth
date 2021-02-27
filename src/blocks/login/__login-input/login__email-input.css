@@ -1,4 +1,4 @@
-.login__login-input {
+.login__email-input {
     background-color: transparent;
     color: #fff;
     border: 0;
@@ -8,6 +8,6 @@
     margin: 0;
 }
 
-.login__login-input::placeholder {
+.login__email-input::placeholder {
     color: #fff;
 }

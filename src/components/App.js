@@ -10,6 +10,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import Login from "./Login";
+import Register from './Register';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -26,6 +27,8 @@ function App() {
   });
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+
+  let isHaveAccount = false; //!
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -135,8 +138,8 @@ function App() {
       <div className="page">
         <div className="page__container">
           <CurrentUserContext.Provider value={currentUser}>
-            <Header />
-            <Login />
+            <Header isHaveAccount={isHaveAccount}/>
+            {isHaveAccount ? <Login/> : <Register/>}
             {/* <Main
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
