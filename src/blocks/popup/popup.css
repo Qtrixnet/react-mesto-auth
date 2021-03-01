@@ -7,6 +7,7 @@
 @import url(./__button/_disabled/popup__button_disabled.css);
 @import url(./__title/popup__title.css);
 @import url(./__title/_confirm/popup__title_confirm.css);
+@import url(./__title/_center/popup__title_center.css);
 @import url(./__fullscreen/popup__fullscreen.css);
 @import url(./__image/popup__image.css);
 @import url(./__image-description/popup__image-description.css);
@@ -15,6 +16,10 @@
 @import url(./__input-error/popup__input-error.css);
 @import url(./__input-error/_visible/popup__input-error_visible.css);
 @import url(./__form-field/popup__form-field.css);
+@import url(./__info/popup__info.css);
+@import url(./__status/popup__status.css);
+@import url(./__status/_fail/popup__status_fail.css);
+@import url(./__status/_success/popup__status_success.css);
 
 .popup {
   width: 100%;

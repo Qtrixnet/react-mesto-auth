@@ -11,6 +11,7 @@ import AddPlacePopup from './AddPlacePopup';
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import Login from "./Login";
 import Register from './Register';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -154,6 +155,7 @@ function App() {
             <EditAvatarPopup isDataLoad={isDataLoad} onUpdateAvatar={handleUpdateAvatar} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
             <ConfirmDeletePopup card={selectedCardDelete} isDataLoad={isDataLoad} onDeleteCard={handleCardDelete} isOpen={isCardDelete} onClose={closeAllPopups} />
             <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+            <InfoTooltip/>
             {/* <Footer /> */}
           </CurrentUserContext.Provider>
         </div>
