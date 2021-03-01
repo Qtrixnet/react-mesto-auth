@@ -12,6 +12,7 @@ import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import Login from "./Login";
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -28,8 +29,7 @@ function App() {
   });
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
-
-  let isHaveAccount = false; //!
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -139,24 +139,40 @@ function App() {
       <div className="page">
         <div className="page__container">
           <CurrentUserContext.Provider value={currentUser}>
-            <Header isHaveAccount={isHaveAccount}/>
-            {isHaveAccount ? <Login/> : <Register/>}
-            {/* <Main
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              onCardClick={handleCardClick}
-              onCardDelete={handleDeleteButtonClick}
-              onCardLike={handleCardLike}
-              cards={cards}
-            /> */}
-            <EditProfilePopup isDataLoad={isDataLoad} onUpdateUser={handleUpdateUser} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
-            <AddPlacePopup isDataLoad={isDataLoad} onAddCard={handleAddPlaceSubmit} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
-            <EditAvatarPopup isDataLoad={isDataLoad} onUpdateAvatar={handleUpdateAvatar} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
-            <ConfirmDeletePopup card={selectedCardDelete} isDataLoad={isDataLoad} onDeleteCard={handleCardDelete} isOpen={isCardDelete} onClose={closeAllPopups} />
-            <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-            <InfoTooltip/>
-            {/* <Footer /> */}
+            <Switch>
+              <Route path="/cards">
+                <Header loggedIn={loggedIn} />
+                <Main
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onCardClick={handleCardClick}
+                  onCardDelete={handleDeleteButtonClick}
+                  onCardLike={handleCardLike}
+                  cards={cards}
+                />
+                <Footer />
+                <EditProfilePopup isDataLoad={isDataLoad} onUpdateUser={handleUpdateUser} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+                <AddPlacePopup isDataLoad={isDataLoad} onAddCard={handleAddPlaceSubmit} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
+                <EditAvatarPopup isDataLoad={isDataLoad} onUpdateAvatar={handleUpdateAvatar} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
+                <ConfirmDeletePopup card={selectedCardDelete} isDataLoad={isDataLoad} onDeleteCard={handleCardDelete} isOpen={isCardDelete} onClose={closeAllPopups} />
+                <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+              </Route>
+              <Route path="/sign-up">
+                <Header loggedIn={loggedIn} />
+                <Register />
+                <InfoTooltip />
+              </Route>
+              <Route path="/sign-in">
+                <Header loggedIn={loggedIn} />
+                <Login />
+                <InfoTooltip />
+              </Route>
+              <Route exact path="/">
+                {loggedIn ? <Redirect to="/cards" /> : <Redirect to="/sign-in" />}
+              </Route>
+            </Switch>
+            {/* {loggedIn ? <Login /> : <Register />} */}
           </CurrentUserContext.Provider>
         </div>
       </div>

@@ -1,11 +1,11 @@
 import React from "react";
 import logo from "../images/Logo-white.svg";
 
-function Header({isHaveAccount}) {
+function Header({loggedIn}) {
   return (
     <header className="header">
       <img className="header__logo" alt="Логотип" src={logo} />
-      <a href={isHaveAccount ? 'Регистрация' : 'Войти'}>{isHaveAccount ? 'Регистрация' : 'Войти'}</a>
+      <a href={loggedIn ? 'Регистрация' : 'Войти'}>{loggedIn ? 'Регистрация' : 'Войти'}</a>
     </header>
   )
 }

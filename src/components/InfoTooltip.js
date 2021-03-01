@@ -4,7 +4,7 @@ function InfoTooltip() {
   let status = true;
 
   return (
-    <div className={`popup popup_opened`}>
+    <div className={`popup`}>
       <div className="popup__info">
         <div className={`popup__status ${status ? 'popup__status_success' : 'popup__status_fail'}`}></div>
         <h2 className="popup__title popup__title_center">{status ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте еще раз.'}</h2>
