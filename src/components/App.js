@@ -20,8 +20,6 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
-  const [isRegisterPopupOpen, setRegisterPopupOpen] = useState(false);
-  const [isRegisterStatusSuccess, setIsRegisterStatusSuccess] = useState(false);
   const [isCardDelete, setIsCardDelete] = useState(false);
   const [isDataLoad, setIsDataLoad] = useState(false);
   const [selectedCard, setSelectedCard] = useState({
@@ -34,11 +32,14 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isInfoTooltipShow, setInfoTooltipShow] = useState({isOpen: false, successful: false});
   
   const initialData = {
     email: '',
     password: '',
   }
+
+  const [profileEmail, setProfileEmail] = useState('')
 
   const [profileData, setProfileData] = useState(initialData);
 
@@ -60,14 +61,6 @@ function App() {
     setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
 
-  function handleRegisterStatus() {
-    setIsRegisterStatusSuccess(!isRegisterStatusSuccess);
-  }
-
-  function handleRegisterPopupShow() {
-    setRegisterPopupOpen(!isRegisterPopupOpen);
-  }
-
   function handleDeleteButtonClick(card) {
     setIsCardDelete(!isCardDelete);
     setSelectedCardDelete(card);
@@ -84,6 +77,10 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard({ ...selectedCard, isOpen: true, element: card });
   }
+  
+  function handleInfoTooltip(res) {
+    setInfoTooltipShow({...isInfoTooltipShow, isOpen: true, successful: res});
+  }
 
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
@@ -93,7 +90,7 @@ function App() {
     setSelectedCard({ ...selectedCard, isOpen: false });
     setSelectedCardDelete({});
     setIsDataLoad(false);
-    setRegisterPopupOpen(false);
+    setInfoTooltipShow({isOpen: false, successful: false})
   }
 
   function handleCardLike(card) {
@@ -156,33 +153,15 @@ function App() {
 
   const history = useHistory();
 
-  // const tokenCheck = () => {
-  //   const jwt = localStorage.getItem('jwt');
-
-  //   if (jwt) {
-  //     auth.checkToken(jwt)
-  //       .then((res) => {
-  //         if (res) {
-  //           setProfileData({
-  //             email: res.email,
-  //             password: res.password
-  //           })
-  //           setLoggedIn(true)
-  //         }
-  //       })
-  //       .catch(() => history.push('/sign-in'));
-  //   }
-  // };
-
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if(jwt){
       auth.checkToken(jwt)
         .then(data => {
           if(data){
-            // setEmail(data.data.email);
+            setProfileEmail(data.data.email)
             setLoggedIn(true)
-            // history.push('/');
+            history.push('/');
           }
         })
     }
@@ -191,16 +170,20 @@ function App() {
   function handleLogin({ email, password }) {
     auth.login(email, password)
       .then(res => {
-        // if (!res || res.statusCode === 400) throw new Error('Что-то пошло не так');
+        console.log(res)
         if (res.token) {
           setLoggedIn(true);
-          // setProfileData({
-          //   email: res.user.email,
-          //   password: res.user.password
-          // })
+          setProfileData({
+            email: email,
+            password: password
+          })
           localStorage.setItem('jwt', res.token);
           history.push('/')
         }
+      })
+      .catch(err => {
+        handleInfoTooltip(false);
+        console.log(err)
       })
   }
 
@@ -208,12 +191,12 @@ function App() {
     auth.register(email, password)
       .then(data => {
         if (data) {
-          handleRegisterStatus(true)
-          handleRegisterPopupShow(true);
+          handleInfoTooltip(true);
           history.push('/sign-in');
         }
       })
       .catch(err => {
+        handleInfoTooltip(false);
         console.log(err);
       })
   }
@@ -230,7 +213,7 @@ function App() {
       <div className="page">
         <div className="page__container">
           <CurrentUserContext.Provider value={currentUser}>
-            <Header loggedIn={loggedIn} onSignOut={handleSignOut}/>
+            <Header email={profileEmail} onSignOut={handleSignOut}/>
             <Switch>
               <ProtectedRoute
                 exact path="/"
@@ -255,13 +238,12 @@ function App() {
               </Route>
             </Switch>
             <Footer />
-            <InfoTooltip isOpen={isRegisterPopupOpen} onClose={closeAllPopups} status={isRegisterStatusSuccess} />
+            <InfoTooltip onClose={closeAllPopups} status={isInfoTooltipShow} />
             <EditProfilePopup isDataLoad={isDataLoad} onUpdateUser={handleUpdateUser} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
             <AddPlacePopup isDataLoad={isDataLoad} onAddCard={handleAddPlaceSubmit} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
             <EditAvatarPopup isDataLoad={isDataLoad} onUpdateAvatar={handleUpdateAvatar} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
             <ConfirmDeletePopup card={selectedCardDelete} isDataLoad={isDataLoad} onDeleteCard={handleCardDelete} isOpen={isCardDelete} onClose={closeAllPopups} />
             <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-            {/* {loggedIn ? <Login /> : <Register />} */}
           </CurrentUserContext.Provider>
         </div>
       </div>

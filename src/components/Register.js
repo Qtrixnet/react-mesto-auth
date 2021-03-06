@@ -1,7 +1,5 @@
-// import userEvent from "@testing-library/user-event";
 import React, { useState} from "react";
 import { Link } from 'react-router-dom';
-// import * as auth from '../utils/auth';
 
 export default function Register({ onRegister }) {
   const initialData = {
@@ -10,14 +8,6 @@ export default function Register({ onRegister }) {
   }
 
   const [profileData, setProfileData] = useState(initialData);
-  // const [message, setMessage] = useState('');
-  // const history = useHistory();
-
-  // useEffect(() => {
-  //   if (localStorage.getItem('jwt')) {
-  //     history.push('/');
-  //   }
-  // }, [history])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -26,11 +16,6 @@ export default function Register({ onRegister }) {
       [name]: value
     }));
   };
-
-  // const resertFrom = () => {
-  //   setProfileData(initialData);
-  //   setMessage('');
-  // }
 
   const handleSubmit = (e) => {
     e.preventDefault()

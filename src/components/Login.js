@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { useHistory } from 'react-router-dom';
 
 export default function Login({ onLogin }) {
   const initialData = {
@@ -8,14 +7,6 @@ export default function Login({ onLogin }) {
   }
 
   const [profileData, setProfileData] = useState(initialData);
-  // const [message, setMessage] = useState('');
-  // const history = useHistory();
-
-  // useEffect(() => {
-  //   if (localStorage.getItem('jwt')) {
-  //     history.push('/');
-  //   }
-  // }, [history])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -25,10 +16,6 @@ export default function Login({ onLogin }) {
     }));
   };
 
-  // const resetForm = () => {
-  //   setProfileData(initialData);
-  //   setMessage('');
-  // }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -38,9 +25,6 @@ export default function Login({ onLogin }) {
     }
 
     onLogin(profileData)
-    // .then(resetForm)
-    // .then(() => history.push('/cards'))
-    // .catch(err => setMessage(err.message || 'Что-то пошло не так'))
   }
 
   return (
