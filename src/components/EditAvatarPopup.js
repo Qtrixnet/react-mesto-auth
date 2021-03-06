@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isDataLoad }) {
 
-    const avatarRef = React.useRef(); //* записываем объект, возвращаемый хуком, в переменную
+    const avatarRef = useRef(); //* записываем объект, возвращаемый хуком, в переменную
 
     function handleSubmit(e) {
         e.preventDefault();
