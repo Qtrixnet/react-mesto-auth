@@ -2,6 +2,8 @@
   color: #fff;
   text-decoration: none;
   padding: 5px 0;
+  font-size: 18px;
+  line-height: 22px;
 }
 
 .header__link:hover {
