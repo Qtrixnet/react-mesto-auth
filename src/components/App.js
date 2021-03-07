@@ -34,14 +34,14 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isInfoTooltipShow, setInfoTooltipShow] = useState({isOpen: false, successful: false});
   
-  const initialData = {
-    email: '',
-    password: '',
-  }
+  // const initialData = {
+  //   email: '',
+  //   password: '',
+  // }
 
   const [profileEmail, setProfileEmail] = useState('')
 
-  const [profileData, setProfileData] = useState(initialData);
+  // const [profileData, setProfileData] = useState(initialData);
 
   useEffect(() => {
     api.getUserInfo()
@@ -164,6 +164,7 @@ function App() {
             history.push('/');
           }
         })
+        .catch(err => { console.log(err); })
     }
   }, [history]);
 
@@ -172,11 +173,12 @@ function App() {
       .then(res => {
         console.log(res)
         if (res.token) {
+          setProfileEmail(email)
           setLoggedIn(true);
-          setProfileData({
-            email: email,
-            password: password
-          })
+          // setProfileData({
+          //   email: email,
+          //   password: password
+          // })
           localStorage.setItem('jwt', res.token);
           history.push('/')
         }
@@ -203,7 +205,8 @@ function App() {
 
   const handleSignOut = () => {
     localStorage.removeItem('jwt');
-    setProfileData(initialData);
+    setProfileEmail('')
+    // setProfileData(initialData);
     setLoggedIn(false);
     history.push('/sign-in');
   }
