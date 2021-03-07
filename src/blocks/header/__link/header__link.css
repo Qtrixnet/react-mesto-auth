@@ -13,7 +13,3 @@
 .header__link:visited {
   color: #fff;
 }
-
-.header__link:active {
-  text-decoration: underline;
-}

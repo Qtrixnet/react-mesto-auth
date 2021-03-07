@@ -16,7 +16,3 @@
 .register__link:visited {
   color: #fff;
 }
-
-.register__link:active {
-  text-decoration: underline;
-}

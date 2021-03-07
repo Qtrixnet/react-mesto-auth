@@ -1,10 +1,10 @@
 .login__email-input {
-    background-color: transparent;
+    background-color: black;
     color: #fff;
     border: 0;
     border-bottom: 2px solid #ccc;
     outline: 0;
-    padding: 0 0 13px;
+    padding: 13px 0 13px;
     margin: 0;
 }
 

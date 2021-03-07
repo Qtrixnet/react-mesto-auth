@@ -17,11 +17,23 @@ import ProtectedRoute from './ProtectedRoute';
 import * as auth from '../utils/auth';
 
 function App() {
+
+  const history = useHistory();
+
+  //! Состояния
+  //* Попапы
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isCardDelete, setIsCardDelete] = useState(false);
+  const [isInfoTooltipShow, setInfoTooltipShow] = useState({ isOpen: false, successful: false });
+  const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [profileEmail, setProfileEmail] = useState('')
+
+  //* Данные
   const [isDataLoad, setIsDataLoad] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
   const [selectedCard, setSelectedCard] = useState({
     isOpen: false,
     element: {},
@@ -29,26 +41,34 @@ function App() {
   const [selectedCardDelete, setSelectedCardDelete] = useState({
     element: {}
   });
-  const [currentUser, setCurrentUser] = useState({});
-  const [cards, setCards] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [isInfoTooltipShow, setInfoTooltipShow] = useState({isOpen: false, successful: false});
-  
-  // const initialData = {
-  //   email: '',
-  //   password: '',
-  // }
 
-  const [profileEmail, setProfileEmail] = useState('')
 
-  // const [profileData, setProfileData] = useState(initialData);
+  //! Эффекты при монтировании компонентов
 
+  //* Проверка токена и авторизация пользователя
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.checkToken(jwt)
+        .then(data => {
+          if (data) {
+            setProfileEmail(data.data.email)
+            setLoggedIn(true)
+            history.push('/');
+          }
+        })
+        .catch(err => { console.log(err); })
+    }
+  }, [history]);
+
+  //* Получение информации о пользователе
   useEffect(() => {
     api.getUserInfo()
       .then(res => { setCurrentUser(res); })
       .catch(err => { console.log(err); })
   }, []);
 
+  //* Загрузка карточек
   useEffect(() => {
     api.getInitialCards()
       .then(initialCards => {
@@ -57,6 +77,7 @@ function App() {
       .catch(err => { console.log(err) });
   }, []);
 
+  //! Функции обработчики
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
@@ -77,9 +98,9 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard({ ...selectedCard, isOpen: true, element: card });
   }
-  
+
   function handleInfoTooltip(res) {
-    setInfoTooltipShow({...isInfoTooltipShow, isOpen: true, successful: res});
+    setInfoTooltipShow({ ...isInfoTooltipShow, isOpen: true, successful: res });
   }
 
   function closeAllPopups() {
@@ -90,7 +111,7 @@ function App() {
     setSelectedCard({ ...selectedCard, isOpen: false });
     setSelectedCardDelete({});
     setIsDataLoad(false);
-    setInfoTooltipShow({isOpen: false, successful: false})
+    setInfoTooltipShow({ isOpen: false, successful: false })
   }
 
   function handleCardLike(card) {
@@ -151,34 +172,13 @@ function App() {
       .finally(() => { setIsDataLoad(false) });
   }
 
-  const history = useHistory();
-
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if(jwt){
-      auth.checkToken(jwt)
-        .then(data => {
-          if(data){
-            setProfileEmail(data.data.email)
-            setLoggedIn(true)
-            history.push('/');
-          }
-        })
-        .catch(err => { console.log(err); })
-    }
-  }, [history]);
-
+  //* Вход в систему
   function handleLogin({ email, password }) {
     auth.login(email, password)
       .then(res => {
-        console.log(res)
         if (res.token) {
           setProfileEmail(email)
           setLoggedIn(true);
-          // setProfileData({
-          //   email: email,
-          //   password: password
-          // })
           localStorage.setItem('jwt', res.token);
           history.push('/')
         }
@@ -189,6 +189,7 @@ function App() {
       })
   }
 
+  //* Регистрация пользователя
   function handleRegister({ email, password }) {
     auth.register(email, password)
       .then(data => {
@@ -203,10 +204,10 @@ function App() {
       })
   }
 
+  //* Выход из системы
   const handleSignOut = () => {
     localStorage.removeItem('jwt');
     setProfileEmail('')
-    // setProfileData(initialData);
     setLoggedIn(false);
     history.push('/sign-in');
   }
@@ -216,7 +217,7 @@ function App() {
       <div className="page">
         <div className="page__container">
           <CurrentUserContext.Provider value={currentUser}>
-            <Header email={profileEmail} onSignOut={handleSignOut}/>
+            <Header email={profileEmail} onSignOut={handleSignOut} />
             <Switch>
               <ProtectedRoute
                 exact path="/"

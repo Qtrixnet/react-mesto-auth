@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
@@ -28,7 +28,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isDataLoad }) {
         });
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         setProfileName(name);
         setDescription(about);
     }, [currentUser]);
