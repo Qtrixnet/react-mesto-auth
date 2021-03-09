@@ -13,3 +13,10 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+@media screen and (max-width: 767px) {
+  .popup__image {
+    min-width: 80vw;
+    max-height: 50vh;
+  }
+}

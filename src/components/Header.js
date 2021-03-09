@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from '../images/logo-white.png';
+import logo from '../images/Logo-white.svg';
 import { Link, Route } from 'react-router-dom';
 
 function Header({ email, onSignOut, loggedIn }) {
