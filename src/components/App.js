@@ -33,6 +33,7 @@ function App() {
 
   //* Данные
   const [isDataLoad, setIsDataLoad] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
   const [selectedCard, setSelectedCard] = useState({
     isOpen: false,
@@ -63,18 +64,22 @@ function App() {
 
   //* Получение информации о пользователе
   useEffect(() => {
+    setIsLoading(true)
     api.getUserInfo()
       .then(res => { setCurrentUser(res); })
       .catch(err => { console.log(err); })
+      .finally(() => { setIsLoading(false) })
   }, []);
 
   //* Загрузка карточек
   useEffect(() => {
+    setIsLoading(true)
     api.getInitialCards()
       .then(initialCards => {
         setCards(initialCards);
       })
-      .catch(err => { console.log(err) });
+      .catch(err => { console.log(err) })
+      .finally(() => { setIsLoading(false) })
   }, []);
 
   //! Функции обработчики
@@ -230,6 +235,7 @@ function App() {
                 onCardDelete={handleDeleteButtonClick}
                 onCardLike={handleCardLike}
                 cards={cards}
+                loading={isLoading}
               />
               <Route path="/sign-up">
                 <Register onRegister={handleRegister} />
