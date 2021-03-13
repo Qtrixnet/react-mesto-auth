@@ -8,7 +8,7 @@ function ImagePopup({ card, onClose }) {
         <div className="popup__image-desription">
           <img
             className="popup__image"
-            src={`${card.element.link}`}
+            src={`${card.element.link || ''}`}
             alt={card.element.name}
           />
           <p className="popup__image-subtitle">{card.element.name}</p>
