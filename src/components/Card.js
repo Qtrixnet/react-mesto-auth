@@ -41,6 +41,7 @@ function Card({ card, likeCounter, onCardClick, onCardDelete, onCardLike }) {
         title="Посмотреть фотографию"
         alt={card.name}
         onClick={handleClick}
+        loading="lazy"
       />
       <div className="elements__container">
         <h2 className="elements__text">{card.name}</h2>
