@@ -125,11 +125,10 @@ function App() {
 
     //* Отправляем запрос в API и получаем обновлённые данные карточки
 
-    api.changeCardLike(card._id, isLiked).then((newCard) => {
-      //* Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-      const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+    api.changeCardLike(card._id, isLiked)
+      .then((newCard) => {
       //* Обновляем стейт
-      setCards(newCards);
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
     })
       .catch(err => {
         console.log(err);
