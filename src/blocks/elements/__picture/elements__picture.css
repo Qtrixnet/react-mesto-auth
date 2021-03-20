@@ -10,10 +10,10 @@
   box-sizing: border-box;
   transition: all .1s ease-in;
   background: #01b7ff;
-  background: url("../../../images/Logo-white.svg"), linear-gradient(120deg, #ffffff 0%, #979797ea 50%, #5c5c5ce7 100%);
-  background-size: 50%, contain;
+  background: url("../../../images/Logo-white.svg"), linear-gradient(120deg, #ffffff 0%, #dadadaea 50%, #acacace7 100%);
+  background-size: 20%, contain;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: 97% 97%;
   object-fit: cover;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import logo from '../images/Logo-white.svg';
 import { Link, Route } from 'react-router-dom';
 
@@ -9,14 +9,14 @@ function Header({ email, onSignOut, loggedIn }) {
 
   //* Проверка ширины окна просмотра, если больше 767 то бургер-меню считается открытым. 
   //* Без контроля ширины окна просмотра, если в мобильной версии закрыть бургер меню и развернуть большой экран, то поле имейла и кнопка имеют display: none;
-  let resizeWindow = () => {
+  let resizeWindow = useCallback(() => {
     setWindowWidth(window.innerWidth);
-    if(windowWidth >= 767) {
+    if (windowWidth >= 767) {
       setIsClicked(true);
-    } 
-  };
+    }
+  }, [windowWidth]);
 
- //* Проверка ширины окна при монтировании компонентов
+  //* Проверка ширины окна при монтировании компонентов
   useEffect(() => {
     resizeWindow();
     window.addEventListener("resize", resizeWindow);
@@ -39,7 +39,7 @@ function Header({ email, onSignOut, loggedIn }) {
       <Route exact path="/">
         <div className='header__burger-menu'>
           <button type="button" className={`${isClicked ? 'header__button header__button_close' : 'header__button header__button_burger'}`} onClick={handleClickMenu}>
-          <span></span>
+            <span></span>
           </button>
         </div>
         <div className={`${isClicked ? 'header__user-menu' : 'not-active'}`}>

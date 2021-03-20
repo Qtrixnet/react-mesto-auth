@@ -43,7 +43,6 @@ function App() {
     element: {}
   });
 
-
   //! Эффекты при монтировании компонентов
 
   //* Проверка токена и авторизация пользователя
@@ -78,7 +77,7 @@ function App() {
       .then(initialCards => {
         setCards(initialCards);
       })
-      .catch(err => { console.log(err) })
+      .catch(err => console.log(err))
       .finally(() => { setIsLoading(false) })
   }, []);
 
@@ -127,9 +126,9 @@ function App() {
 
     api.changeCardLike(card._id, isLiked)
       .then((newCard) => {
-      //* Обновляем стейт
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    })
+        //* Обновляем стейт
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
       .catch(err => {
         console.log(err);
       });

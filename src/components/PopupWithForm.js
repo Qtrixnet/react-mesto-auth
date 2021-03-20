@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-function PopupWithForm({ id, isOpen, name, children, title, onClose, onSubmit, submitText }) {
+function PopupWithForm({ id, isOpen, name, children, title, onClose, onSubmit, submitText, isDisabled }) {
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEscapeClose = (evt) => {
+      if (evt.key === 'Escape') {
+        onClose()
+      };
+    };
+    document.addEventListener('keyup', handleEscapeClose);
+    return () => {
+      document.removeEventListener('keyup', handleEscapeClose);
+    };
+  }, [isOpen, onClose])
 
   return (
     <div id={id} className={`popup ${isOpen && 'popup_opened'}`}>
@@ -8,7 +21,7 @@ function PopupWithForm({ id, isOpen, name, children, title, onClose, onSubmit, s
         <fieldset className="popup__set">
           <p className="popup__title">{title}</p>
           {children}
-          <button type="submit" className="popup__button">
+          <button type="submit" className={`popup__button ${isDisabled && "popup__button_disabled"}`} disabled={isDisabled}>
             {submitText}
           </button>
         </fieldset>

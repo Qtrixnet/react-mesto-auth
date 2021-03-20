@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export default function InfoTooltip({ onClose, status: { isOpen, successful }}) {
+export default function InfoTooltip({ onClose, status: { isOpen, successful } }) {
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEscapeClose = (evt) => {
+      if (evt.key === 'Escape') {
+        onClose()
+      };
+    };
+    document.addEventListener('keyup', handleEscapeClose);
+    return () => {
+      document.removeEventListener('keyup', handleEscapeClose);
+    };
+  }, [isOpen, onClose])
 
   return (
     <div className={`popup ${isOpen && 'popup_opened'}`}>
